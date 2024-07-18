@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Button_Outlined" parent="Widget.MaterialComponents.Button.OutlinedButton">
-    </style>
-
     <style name="CustomButtonStyle" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="backgroundTint">@color/white</item>
         <item name="rippleColor">@color/grey</item>
@@ -11,7 +8,4 @@
         <item name="strokeColor">@color/black</item>
     </style>
 
-    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight">
-        <item name="myButtonStyle">@style/CustomButtonStyle</item>
-    </style>
 </resources>

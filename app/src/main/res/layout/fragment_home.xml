@@ -10,40 +10,44 @@
         android:id="@+id/tv_home_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
         android:gravity="center"
         android:text="@string/homepage_title"
         android:textColor="@color/title_color"
-        android:layout_marginBottom="12dp"
         android:textSize="24sp"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_above="@id/btn_save"
-        android:layout_below="@id/tv_home_title"
+        android:layout_margin="16dp"
         app:layout_constraintBottom_toTopOf="@id/btn_save"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_home_title"
-        tools:ignore="MissingConstraints">
+        app:layout_constraintTop_toBottomOf="@id/tv_home_title">
 
-        <androidx.constraintlayout.helper.widget.Flow
-            android:id="@+id/flow"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            app:flow_horizontalAlign="center"
-            app:flow_horizontalBias="0"
-            app:flow_maxElementsWrap="3"
-            app:flow_verticalBias="0"
-            app:flow_verticalGap="8dp"
-            app:flow_wrapMode="aligned"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            tools:ignore="MissingConstraints">
+
+            <androidx.constraintlayout.helper.widget.Flow
+                android:id="@+id/flow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                app:flow_horizontalAlign="center"
+                app:flow_verticalGap="8dp"
+                app:flow_horizontalGap="8dp"
+                app:flow_wrapMode="chain"
+                app:flow_verticalAlign="center"
+                app:flow_firstHorizontalStyle="spread"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
     <Button
         android:id="@+id/btn_save"

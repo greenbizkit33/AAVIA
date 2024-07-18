@@ -7,22 +7,19 @@ import com.nathanhaze.aavia.ui.HappyList
 
 class HomeViewModel : ViewModel() {
 
-
     private val _lastHappyWord = MutableLiveData<String>(HappyList.getLastHappyWord())
 
     val lastHappyWord: LiveData<String>
         get() = _lastHappyWord
 
 
-    private val _list = MutableLiveData<ArrayList<String>>(HappyList.getArrayList())//.apply {
+    private val _list = MutableLiveData(HappyList.getArrayList())//.apply {
 
-    //  value = HappyList.getArrayList()
-    //  }
     val happyList: LiveData<ArrayList<String>>
         get() = _list
 
     fun updateHappyList(happyValue: String) {
-        if (happyValue.isNullOrBlank()) {
+        if (happyValue.isBlank()) {
             return
         }
         _lastHappyWord.postValue(happyValue)
