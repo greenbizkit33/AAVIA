@@ -11,15 +11,12 @@ import com.google.gson.reflect.TypeToken
 object HappyList {
 
     private const val HAPPY_LIST = "happy"
-
     private const val LAST_WORD = "last word"
 
     private var sharedPreferences: SharedPreferences? = null
 
     private var defaultHappyList = "[\"Family\",\"Friends\",\"Work\",\"Other..\"]"
 
-
-    // TODO step 1: call `AppPreferences.setup(applicationContext)` in your MainActivity's `onCreate` method
     fun setup(context: Context) {
         sharedPreferences = context.getSharedPreferences("local_shared", MODE_PRIVATE)
     }
@@ -33,14 +30,13 @@ object HappyList {
 
     fun getArrayList(): ArrayList<String> {
         val json = sharedPreferences?.getString(HAPPY_LIST, defaultHappyList)
-        Log.d("nathanx", "default string " + json)
         val type = object : TypeToken<ArrayList<String>>() {}.type
         return gson.fromJson(json, type) ?: ArrayList()
     }
 
     fun addHappyValue(key: String) {
         val happyList = getArrayList()
-        happyList.add(happyList.size - 1, key)
+        happyList.add(happyList.size - 2, key)
         saveArrayList(happyList)
     }
 

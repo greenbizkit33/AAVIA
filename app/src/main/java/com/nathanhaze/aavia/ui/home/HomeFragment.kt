@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.button.MaterialButton
@@ -69,6 +70,7 @@ class HomeFragment : Fragment() {
             //  addHappyButton(value)
         }
 
+        binding.btnSave.setOnClickListener { homeViewModel.saveList() }
         return root
     }
 
@@ -90,9 +92,11 @@ class HomeFragment : Fragment() {
     }
 
     private fun createHappyButtons(array: ArrayList<String>) {
-        clearImageView(binding.constraintLayout)
+        clearButtons(binding.constraintLayout)
+        val lastSelectedWord = homeViewModel.lastHappyWord.value
         array.forEachIndexed { index, element ->
             val button = getButton(element)
+            // add the click listener
             if (index == array.size - 1) {
                 val customDialogView: View = layoutInflater.inflate(R.layout.dialog_add, null)
                 val editText = customDialogView.findViewById<EditText>(R.id.edit_text)
@@ -102,17 +106,28 @@ class HomeFragment : Fragment() {
 
                 val alertDialog = AlertDialog.Builder(requireContext())
                     .setView(customDialogView)
-                    .setPositiveButton("OK") { _, _ ->
+                    .setPositiveButton("ADD") { _, _ ->
                         val happyWord = editText.text.toString()
                         editText.text.clear();
                         homeViewModel.updateHappyList(happyWord)
                     }
-                    .setNegativeButton("Cancel", null)
+                    .setNegativeButton("Cancel") { _, _ ->
+                        editText.text.clear();
+                    }
                     .create()
 
                 button.setOnClickListener {
                     alertDialog.show()
                 }
+            }
+
+            if (element == lastSelectedWord) {
+                button.setBackgroundColor(
+                    ContextCompat.getColor(
+                        requireActivity(),
+                        R.color.button_selected
+                    )
+                );
             }
             binding.constraintLayout.addView(button, index)
             binding.flow.addView(button)
@@ -125,12 +140,14 @@ class HomeFragment : Fragment() {
             null,
             com.google.android.material.R.attr.materialButtonOutlinedStyle
         )
-        button.text = title
+        button.isAllCaps = false
+        val formatTitle = title.replaceFirst(title[0], title[0].uppercaseChar())
+        button.text = formatTitle
         button.id = generateViewId()
         return button
     }
 
-    private fun clearImageView(v: ViewGroup) {
+    private fun clearButtons(v: ViewGroup) {
         var doBreak = false
         while (!doBreak) {
             val childCount = v.childCount

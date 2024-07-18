@@ -2,7 +2,10 @@
     <!-- Base application theme. -->
     <style name="Theme.Aavia" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 
-        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
 
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/black</item>

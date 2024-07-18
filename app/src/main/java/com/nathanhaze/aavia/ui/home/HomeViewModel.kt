@@ -8,22 +8,32 @@ import com.nathanhaze.aavia.ui.HappyList
 class HomeViewModel : ViewModel() {
 
 
-    private val _lastHappyWord= MutableLiveData<String>("")
+    private val _lastHappyWord = MutableLiveData<String>(HappyList.getLastHappyWord())
 
     val lastHappyWord: LiveData<String>
         get() = _lastHappyWord
 
 
     private val _list = MutableLiveData<ArrayList<String>>(HappyList.getArrayList())//.apply {
-      //  value = HappyList.getArrayList()
-  //  }
+
+    //  value = HappyList.getArrayList()
+    //  }
     val happyList: LiveData<ArrayList<String>>
-          get() = _list
+        get() = _list
 
     fun updateHappyList(happyValue: String) {
-        HappyList.addHappyValue(happyValue)
+        if (happyValue.isNullOrBlank()) {
+            return
+        }
         _lastHappyWord.postValue(happyValue)
-        val list = HappyList.getArrayList()
-        _list.postValue(list)
+        HappyList.saveLastHappyWord(happyValue)
+        _list.value?.let {
+            it.add(it.size - 1, happyValue)
+            _list.postValue(it)
+        }
+    }
+
+    fun saveList() {
+        happyList.value?.let { HappyList.saveArrayList(it) }
     }
 }
